@@ -1,5 +1,5 @@
 var GedcomConst = {
-	VERSION : "1.0.1",
+	VERSION : "1.0.3",
 
 	path : {
 		RESSOURCE_PATH : "ged/demo/",
@@ -19,10 +19,10 @@ var GedcomConst = {
 
 	QUERY_PARAM : "root",
 
-	LANGUAGE : "fr",
+	LANGUAGE : "en",
 
 	SHOW_DOWNLOAD : false,
-	SHOW_LOG : false,
+	SHOW_LOG : true,
 	SHOW_PRIVATE_RECORD : false,
 
 	SHOW_GEOLOC : true,
@@ -44,6 +44,6 @@ var GedcomConst = {
 		ERROR : 3
 	},
 
-	logLevel : 3
+	logLevel : 0
 
 };

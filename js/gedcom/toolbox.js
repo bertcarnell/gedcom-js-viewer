@@ -1,5 +1,9 @@
 /* Required : GedcomConst */
 /* Required : GedcomLang */
+
+/* define global variables from other scripts for JSLint */
+/*global GedcomConst, GedcomLang, parser, viewer, $R, Class, log*/
+
 var GedcomToolbox = {
 
 	idSeed : 100,

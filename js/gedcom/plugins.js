@@ -2,6 +2,10 @@
 /* Required : GedcomLang */
 /* Required : GedcomParser */
 /* Required : GedcomToolbox */
+
+/* define global variables from other scripts for JSLint */
+/*global GedcomParser, GedcomToolbox, GedcomConst, GedcomLang, parser, $A, Class, log*/
+
 var GedcomPlugins = {
 
 	plugins : [],

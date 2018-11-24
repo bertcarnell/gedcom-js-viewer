@@ -3,6 +3,9 @@
 /* Required : GedcomPlugins */
 /* Required : GedcomParser */
 
+/* define global variables from other scripts for JSLint */
+/*global GedcomParser, GedcomPlugins, GedcomConst, GedcomLang, Class, log*/
+
 GedcomPlugins.setRequired("deat");
 GedcomPlugins.setRequired("privacy");
 GedcomPlugins.setRequired("sexe");

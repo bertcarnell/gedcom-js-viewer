@@ -1,4 +1,8 @@
 /* Required : GedcomConst */
+
+/* define global variables from other scripts for JSLint */
+/*global GedcomConst*/
+
 var GedcomLang = {
 
 	language : null,

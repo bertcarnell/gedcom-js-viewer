@@ -1,5 +1,9 @@
 /* Required : GedcomConst */
 /* Required : GedcomLang */
+
+/* define global variables from other scripts for JSLint */
+/*global GedcomConst, GedcomLang*/
+
 var GedcomIHM = {
 	init : function() {
 		$(GedcomConst.id.DETAIL_ID).hide();

@@ -2,6 +2,10 @@
 /* Required : GedcomLang */
 /* Required : GedcomToolbox */
 /* Required : GedcomPlugins */
+
+/* define global variables from other scripts for JSLint */
+/*global GedcomToolbox, GedcomConst, GedcomLang, GedcomPlugins, Class, $H, $A, log*/
+
 var GedcomViewer = Class.create();
 GedcomViewer.prototype = {
 
@@ -49,9 +53,6 @@ GedcomViewer.prototype = {
 
 	/**
 	 * Constructeur
-	 *
-	 * @param id
-	 *          identifier de l'element HTML où effectuer le rendu
 	 */
 	initialize : function() {
 		this.canvas = $(GedcomConst.id.CANVAS_ID);
@@ -69,8 +70,7 @@ GedcomViewer.prototype = {
 	/**
 	 * Positionne le noeud racide de l'arbre à afficher.
 	 *
-	 * @param {Personne /
-	 *          Famille} : racine de type 'Personne' ou 'Famille'.
+	 * @param {GedcomConst.indicator} root TODO
 	 */
 	setRoot : function(root) {
 		log.info();
@@ -199,9 +199,9 @@ GedcomViewer.prototype = {
 	/**
 	 * Créé une boîte pour une personne dans la sandbox
 	 *
-	 * @param {Personne} :
-	 *          la personne à afficher
-	 * @return {Personne} personne
+	 * @param {personne} p TODO
+     * @param {char} level GP, C TODO
+	 * @return {personne} TODO
 	 */
 	addBox : function(p, level) {
 		log.debug("Création de (" + level + ") " + this.createHtmlLink(p), 1);
@@ -487,8 +487,7 @@ GedcomViewer.prototype = {
 				var px;
 				if (this.root.husb && this.root.wife) {
 					px = (this.getBlocPosition(this.root.husb).x + this.getBlocPosition(this.root.wife).x + this
-							.getBlocDimensions(this.root.husb).width)
-							/ 2;
+							.getBlocDimensions(this.root.husb).width) / 2;
 				} else if (this.root.husb) {
 					px = (this.getBlocPosition(this.root.husb).x + this.getBlocDimensions(this.root.husb).width) / 2;
 				} else if (this.root.husb) {
@@ -564,13 +563,10 @@ GedcomViewer.prototype = {
 	/**
 	 * Positionne le bloc d'une personne
 	 *
-	 * @param {Personne} :
-	 *          personne à positionner
-	 * @param {Long} :
-	 *          offset en X par rapport à l'origine
-	 * @param {Long} :
-	 *          offset en Y par rapport à l'origine
-	 * @return {Personne} p
+	 * @param {Personne} p TODO
+	 * @param {Long} oX offset en X par rapport à l'origine
+	 * @param {Long} oY offset en Y par rapport à l'origine
+	 * @return {Personne} p TODO
 	 */
 	placeBox : function(p, oX, oY) {
 		log.debug("&#160;>&#160;Positionnement de " + this.createHtmlLink(p));
@@ -587,10 +583,8 @@ GedcomViewer.prototype = {
 	/**
 	 * Affiche le lien entre deux personnes
 	 *
-	 * @param {Personne} :
-	 *          personne source
-	 * @param {Personne,Personne[]} :
-	 *          personne(s) destination.
+	 * @param {Personne} s personne source
+	 * @param {Personne,Personne[]} d personne(s) destination.
 	 * @return {Element} ligne tracée
 	 */
 	link : function(s, d) {
@@ -670,8 +664,7 @@ GedcomViewer.prototype = {
 				d.reverse();
 			}
 			var midx = this.getBlocPosition(d[1]).x
-					- (this.getBlocPosition(d[1]).x - this.getBlocPosition(d[0]).x - this.getBlocDimensions(d[0]).width)
-					/ 2;
+					- (this.getBlocPosition(d[1]).x - this.getBlocPosition(d[0]).x - this.getBlocDimensions(d[0]).width) / 2;
 			var midy = this.getBlocPosition(d[0]).y
 					+ Math.min(this.getBlocDimensions(d[0]).height, this.getBlocDimensions(d[1]).height) / 2;
 
@@ -728,8 +721,8 @@ GedcomViewer.prototype = {
 	/**
 	 * Retourne les dimensions en largeur et hauteur d'un texte
 	 *
-	 * @param {String} :
-	 *          texte à écrire
+	 * @param {String} text texte à écrire
+     * @param {textSandbox.attr} attr TODO
 	 * @return {width:'', height:''}
 	 */
 	getTextDimensions : function(text, attr) {
@@ -752,8 +745,7 @@ GedcomViewer.prototype = {
 	/**
 	 * Calcule la place occupée par pour un groupe de personnes.
 	 *
-	 * @param {Personne /
-	 *          Personne[]} : personne ou tableau de personne
+	 * @param {Personne Personne[]} a personne ou tableau de personne
 	 * @return { width : '', height : ''}
 	 */
 	getBlocDimensions : function(a) {
@@ -786,8 +778,7 @@ GedcomViewer.prototype = {
 	/**
 	 * Calcule la position en X d'une personne par rapport à ses deux parents
 	 *
-	 * @param {Personne} :
-	 *          personne
+	 * @param {Personne} p personne
 	 * @return {Long} position en x
 	 */
 	getParentX : function(p) {
@@ -797,22 +788,18 @@ GedcomViewer.prototype = {
 		if (gp && gm) {
 			// Aligment sur le milieu de l'espace entre les des deux parents
 			return (this.getBlocPosition(gp).x + this.getBlocPosition(gm).x + this.getBlocDimensions(gp).width - this
-					.getBlocDimensions(p).width)
-					/ 2;
+					.getBlocDimensions(p).width) / 2;
 		} else if (gp) {
 			// Alignement sur le grand père
-			return (this.getBlocPosition(gp).x + (this.getBlocDimensions(gp).width - this.getBlocDimensions(p).width)
-					/ 2);
+			return (this.getBlocPosition(gp).x + (this.getBlocDimensions(gp).width - this.getBlocDimensions(p).width) / 2);
 		} else {
 			// Alignement sur la grand mère
-			return (this.getBlocPosition(gm).x + (this.getBlocDimensions(gm).width - this.getBlocDimensions(p).width)
-					/ 2);
+			return (this.getBlocPosition(gm).x + (this.getBlocDimensions(gm).width - this.getBlocDimensions(p).width) / 2);
 		}
 
 		// Aligment sur le milieu de la largeur des deux parents
 		return (this.getBlocPosition(gm).x + this.getBlocDimensions(gm).width - this.getBlocPosition(gp).x - this
-				.getBlocDimensions(p).width)
-				/ 2 + this.getBlocPosition(gp).x;
+				.getBlocDimensions(p).width) / 2 + this.getBlocPosition(gp).x;
 	},
 
 	openDetail : function(p) {

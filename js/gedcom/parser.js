@@ -1,15 +1,25 @@
 /* Required : GedcomToolbox */
 /* Required : GedcomConst */
 /* Required : GedcomLang */
+
+/* define global variables from other scripts for JSLint */
+/*global GedcomToolbox, GedcomConst, GedcomLang, GedcomIHM, Ajax, $A, $R, Class, log*/
+
 var GedcomParser = Class.create();
 GedcomParser.prototype = {
 
-	// Variables privées
+	// private Variables
 	DATAS : null,
 
+    // initialize 
 	initialize : function() {
 	},
 
+    /**
+     * Load a GEDCOM file using Ajax and parse the file
+     * @param {Object} file A GEDCOM file
+     * @returns {undefined}
+     */
 	load : function(file) {
 		log.info();
 		log.info("Parser::Loading " + file);
@@ -22,6 +32,14 @@ GedcomParser.prototype = {
 				});
 	},
 
+    /**
+     * Create a node obect without children
+     * In the GEDCOM File, [level] [type] [value] like 1 NAME My /Name/
+     * @param {String} type The type of GEDCOM entry
+     * @param {String} value The value of the GEDCOM entry
+     * @param {String} level The numeric level of the GEDCOM entry as a String
+     * @returns {GedcomParser.prototype.node.parserAnonym$1} an object with elements: value, type, level, childs
+     */
 	node : function(type, value, level) {
 		return {
 			value : value,
@@ -31,6 +49,11 @@ GedcomParser.prototype = {
 		};
 	},
 
+    /**
+     * Parse a GEDCOM file by lines and call the analyze method
+     * @param {Object} gedcom The GEDCOM file
+     * @returns {}
+     */
 	parse : function(gedcom) {
 		var lines = gedcom.match(/[^\r\n]+/g);
 		log.debug(lines.length + " lines extracted");
